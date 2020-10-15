@@ -1,0 +1,39 @@
+{
+  "name": "chatroom-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently --kill-others \"npm run build -- --watch --outDir lib\" \"nodemon --inspect lib/index.js\" ",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blog-gyyin-top/chatroom-api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/blog-gyyin-top/chatroom-api/issues"
+  },
+  "homepage": "https://github.com/blog-gyyin-top/chatroom-api#readme",
+  "dependencies": {
+    "knex": "^0.21.6",
+    "koa": "^2.13.0",
+    "koa-bodyparser": "^4.3.0",
+    "koa-json": "^2.0.2",
+    "koa-logger": "^3.2.1",
+    "koa-router": "^9.4.0",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.11.5",
+    "@types/koa-bodyparser": "^4.3.0",
+    "@types/koa-json": "^2.0.18",
+    "@types/koa-logger": "^3.1.1",
+    "@types/koa-router": "^7.4.1",
+    "nodemon": "^2.0.4",
+    "typescript": "^4.0.3"
+  }
+}
