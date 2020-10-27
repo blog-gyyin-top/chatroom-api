@@ -1,0 +1,16 @@
+# 聊天室 api
+## mysql
+数据库设计都在 `app.sql` 里面，可以参考。
+### mac mysql 运行
+首先，本地安装 mysql，然后执行 `sudo /usr/local/MySQL/support-files/mysql.server start` 来启动 mysql。
+然后执行 `/usr/local/MySQL/bin/mysql -u root -p`，输入密码后就可以登录到 mysql。
+
+
+
+
+
+
+## 参考
+
+[mysql 如何重置密码](https://www.cnblogs.com/guokaixin/p/6547306.html)
+[mysql 安装](https://www.cnblogs.com/nickchen121/p/11145123.html)
