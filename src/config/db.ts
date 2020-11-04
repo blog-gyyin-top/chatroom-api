@@ -9,3 +9,4 @@ export const client = knex({
     database: 'chatroom'
   }
 })
+
