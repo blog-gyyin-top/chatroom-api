@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "concurrently --kill-others \"npm run build -- --watch --outDir lib\" \"nodemon --inspect lib/index.js\" ",
+    "dev": "concurrently --kill-others \"npm run build -- --watch --outDir lib\" \"nodemon --inspect lib/index.js\" ",
+    "start": "pm2 stop lib/index.js && pm2 restart lib/index.js",
     "build": "tsc"
   },
   "repository": {

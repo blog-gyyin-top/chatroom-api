@@ -9,7 +9,6 @@ import swagger from './utils/swagger'
 import user from './router/user'
 
 const app = new Koa()
-const router = new KoaRouter()
 
 app.use(json())
 app.use(koaBody())
@@ -21,12 +20,8 @@ app.use(koaSwagger({
   }
 }))
 
-router.get('/test', function() {
-  console.log('this is test')
-})
-app.use(router.routes()).use(router.allowedMethods())
-app.use(user.routes()).use(router.allowedMethods())
 app.use(swagger.routes())
+app.use(user.routes()).use(user.allowedMethods())
 
 app.listen(3000, function() {
   console.log('server is running on port 3000')
