@@ -8,7 +8,16 @@ export const DB_TABLE = {
 export const SALT = "hhug6dcKyCNBQ5sUC0i6hja5dCTqdSzV"
 
 export const STATUS = {
-  10000: 'params are invalid',
-  10001: 'user does not exist',
-  10002: 'password is incorrect'
+  PARAMS_INVALID: {
+    code: 10000,
+    message: 'params are invalid'
+  },
+  USER_NOT_EXIST: {
+    code: 10001,
+    message: 'user does not exist',
+  },
+  PASSWORD_INCORRECT: {
+    code: 10002,
+    message: 'password is incorrect'
+  }
 }

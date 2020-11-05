@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS `group_message` (
 CREATE TABLE IF NOT EXISTS `group` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) NOT NULL,
+  `description` varchar(50) DEFAULT NULL,
   `password` varchar(20) NOT NULL,
   `update_time` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -25,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `group` (
 CREATE TABLE IF NOT EXISTS `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) NOT NULL,
-  `password` varchar(20) NOT NULL,
+  `password` varchar(50) NOT NULL,
   `create_time` int(10) DEFAULT NULL,
   `update_time` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`),

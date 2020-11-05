@@ -1,6 +1,7 @@
 import Koa from 'koa'
 import json from 'koa-json'
-import KoaRouter from 'koa-router'
+import koaStatic from 'koa-static'
+import path from 'path'
 import logger from 'koa-logger'
 import koaBody from 'koa-bodyparser'
 import { koaSwagger } from 'koa2-swagger-ui'
@@ -13,8 +14,9 @@ const app = new Koa()
 app.use(json())
 app.use(koaBody())
 app.use(logger())
+app.use(koaStatic(path.resolve(__dirname, './assets')))
 app.use(koaSwagger({
-  routePrefix: '/swagger',
+  routePrefix: '/api/swagger',
   swaggerOptions: {
     url: '/swagger.json'
   }

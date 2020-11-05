@@ -3,12 +3,14 @@ import crypto from 'crypto'
 import jsonschema from 'jsonschema'
 
 import { client } from '../../config/db'
-import { DB_TABLE } from '../../constants'
+import { DB_TABLE, STATUS } from '../../constants'
 import { User } from '../../../@types/user'
 import { SALT } from '../../constants'
 import { sign } from '../../utils/jwt'
 
-const router = new Router();
+const router = new Router({
+  prefix: '/api'
+});
 const validate = jsonschema.validate;
 const user_tab = DB_TABLE.user;
 
@@ -27,10 +29,7 @@ const checkUserParams = (ctx, next) => {
     required: ['name', 'password']
   })
   if (!res.valid) {
-    ctx.response.body = {
-      code: 1,
-      message: 'params are invalid'
-    }
+    ctx.response.body = STATUS.PARAMS_INVALID
   }
   return next()
 }
@@ -52,7 +51,7 @@ router.post('/register', checkUserParams, async function(ctx, next) {
       code: 0,
       message: 'Success',
       data: {
-        id: id
+        id: id[0]
       }
     }
   } catch (err) {
@@ -70,17 +69,11 @@ router.post('/login', checkUserParams, async function(ctx, next) {
     name: params.name
   }).first();
   if (!user) {
-    ctx.response.body = {
-      code: 2,
-      message: `user does not exist`
-    }
+    ctx.response.body = STATUS.USER_NOT_EXIST
     return next()
-  } 
+  }
   if (user.password !== encryPassword) {
-    ctx.response.body = {
-      code: 3,
-      message: 'password is incorrect'
-    }
+    ctx.response.body = STATUS.PASSWORD_INCORRECT
     return next()
   }
   // jwt 生成 token
