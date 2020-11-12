@@ -3,13 +3,13 @@ import crypto from 'crypto'
 import jsonschema from 'jsonschema'
 
 import { client } from '../../config/db'
-import { DB_TABLE, STATUS } from '../../constants'
+import { DB_TABLE, ERROR_STATUS } from '../../constants'
 import { User } from '../../../@types/user'
 import { SALT } from '../../constants'
 import { sign } from '../../utils/jwt'
 
 const router = new Router({
-  prefix: '/api'
+  prefix: '/user'
 });
 const validate = jsonschema.validate;
 const user_tab = DB_TABLE.user;
@@ -29,7 +29,7 @@ const checkUserParams = (ctx, next) => {
     required: ['name', 'password']
   })
   if (!res.valid) {
-    ctx.response.body = STATUS.PARAMS_INVALID
+    ctx.response.body = ERROR_STATUS.PARAMS_INVALID
   }
   return next()
 }
@@ -69,11 +69,11 @@ router.post('/login', checkUserParams, async function(ctx, next) {
     name: params.name
   }).first();
   if (!user) {
-    ctx.response.body = STATUS.USER_NOT_EXIST
+    ctx.response.body = ERROR_STATUS.USER_NOT_EXIST
     return next()
   }
   if (user.password !== encryPassword) {
-    ctx.response.body = STATUS.PASSWORD_INCORRECT
+    ctx.response.body = ERROR_STATUS.PASSWORD_INCORRECT
     return next()
   }
   // jwt 生成 token

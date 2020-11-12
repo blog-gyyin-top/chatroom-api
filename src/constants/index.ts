@@ -7,7 +7,7 @@ export const DB_TABLE = {
 
 export const SALT = "hhug6dcKyCNBQ5sUC0i6hja5dCTqdSzV"
 
-export const STATUS = {
+export const ERROR_STATUS = {
   PARAMS_INVALID: {
     code: 10000,
     message: 'params are invalid'
@@ -19,5 +19,9 @@ export const STATUS = {
   PASSWORD_INCORRECT: {
     code: 10002,
     message: 'password is incorrect'
+  },
+  GROUP_NOT_EXIST: {
+    code: 10003,
+    message: 'group does not exist'
   }
 }

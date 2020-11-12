@@ -102,6 +102,76 @@
           }
         }
       }
+    },
+    "/api/group/create": {
+      "post": {
+        "tags": [
+          "group"
+        ],
+        "summary": "group create",
+        "description": "group create",
+        "operationId": "groupCreate",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "create chatroom",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "$ref": "#/definitions/CreateResponse"
+            }
+          }
+        }
+      }
+    },
+    "/api/group/enter": {
+      "post": {
+        "tags": [
+          "group"
+        ],
+        "summary": "group enter",
+        "description": "group enter",
+        "operationId": "groupEnter",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "enter chatroom",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/EnterRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "$ref": "#/definitions/EnterResponse"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -141,6 +211,61 @@
       "properties": {
         "code": {
           "type": "integer"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "CreateRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "CreateResponse": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "number"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "number"
+            }
+          }
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "EnterRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "EnterResponse": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "number"
         },
         "message": {
           "type": "string"
