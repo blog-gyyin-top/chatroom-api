@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS `group` (
   `name` varchar(20) NOT NULL,
   `description` varchar(50) DEFAULT NULL,
   `password` varchar(20) NOT NULL,
+  `create_time` int(10) DEFAULT NULL,
   `update_time` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

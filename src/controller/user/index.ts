@@ -1,3 +1,4 @@
+import { ParameterizedContext, Next } from 'koa'
 import Router from 'koa-router'
 import crypto from 'crypto'
 import jsonschema from 'jsonschema'
@@ -14,7 +15,7 @@ const router = new Router({
 const validate = jsonschema.validate;
 const user_tab = DB_TABLE.user;
 
-const checkUserParams = (ctx, next) => {
+export const checkUserParams = (ctx, next) => {
   const params: User.registerParams = ctx.request.body;
   const res = validate(params, {
     type: 'object',
@@ -33,7 +34,8 @@ const checkUserParams = (ctx, next) => {
   }
   return next()
 }
-router.post('/register', checkUserParams, async function(ctx, next) {
+
+export const registerUser = async (ctx: ParameterizedContext, next: Next) => {
   const params: User.registerParams = ctx.request.body;
   const table = client.from(user_tab);
   const md5 = crypto.createHash('md5')
@@ -57,8 +59,9 @@ router.post('/register', checkUserParams, async function(ctx, next) {
   } catch (err) {
     ctx.throw(500, err.message)
   }
-})
-router.post('/login', checkUserParams, async function(ctx, next) {
+}
+
+export const login = async function(ctx: ParameterizedContext, next: Next) {
   const params: User.registerParams = ctx.request.body;
   const table = client.from(user_tab);
   const md5 = crypto.createHash('md5')
@@ -77,7 +80,7 @@ router.post('/login', checkUserParams, async function(ctx, next) {
     return next()
   }
   // jwt 生成 token
-  const token = sign(params)
+  const token = sign(user)
   ctx.cookies.set('a-token', token, {
     domain: '',
     path: '/',
@@ -89,9 +92,6 @@ router.post('/login', checkUserParams, async function(ctx, next) {
     code: 0,
     message: 'login success'
   }
-})
-router.get('/user/:id', function() {
-
-})
+}
 
 export default router

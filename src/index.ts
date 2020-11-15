@@ -1,20 +1,21 @@
 import Koa from 'koa'
 import json from 'koa-json'
-import Router from 'koa-router'
+import http from 'http'
+import { Server } from 'socket.io'
 import koaStatic from 'koa-static'
 import path from 'path'
 import logger from 'koa-logger'
 import koaBody from 'koa-bodyparser'
 import { koaSwagger } from 'koa2-swagger-ui'
 import swagger from './utils/swagger'
-
-import user from './router/user'
-import group from './router/group'
+import router from './router'
+import socket from './controller/socket'
 
 const app = new Koa()
-const router = new Router({
-  prefix: '/api'
-})
+const server = http.createServer(app.callback())
+const io = new Server(server)
+
+io.on('connection', socket)
 
 app.use(json())
 app.use(koaBody())
@@ -28,8 +29,7 @@ app.use(koaSwagger({
 }))
 
 app.use(swagger.routes())
-router.use(user.routes(), user.allowedMethods())
-router.use(group.routes(), group.allowedMethods())
+app.use(router.routes())
 
 app.listen(3000, function() {
   console.log('server is running on port 3000')

@@ -1,16 +1,21 @@
+
+import { ParameterizedContext, Next } from 'koa'
 import Router from 'koa-router'
 import jsonschema from 'jsonschema'
 import { Group } from '../../../@types/group'
 import { client  } from '../../config/db'
 import { DB_TABLE, ERROR_STATUS } from '../../constants'
+import { verify } from '../../middleware/auth'
 
 const router = new Router({
   prefix: '/group'
 })
+router.use(verify)
 const validate = jsonschema.validate;
 const group_tab = DB_TABLE.group;
+const user_group_tab = DB_TABLE.user_group
 
-router.post('/create', async function(ctx, next) {
+export const createGroup = async (ctx: ParameterizedContext, next: Next) => {
   const params: Group.createParams = ctx.request.body;
   const model = client.from(group_tab)
   const res = validate(params, {
@@ -47,9 +52,10 @@ router.post('/create', async function(ctx, next) {
     },
     message: 'success'
   }
-})
+}
 
-router.post('/enter', async (ctx, next) => {
+export const enterGroup = async (ctx: ParameterizedContext, next: Next) => {
+  const user = ctx.state.user;
   const params: Group.enterParams  = ctx.request.body
   const res = validate(params, {
     type: 'object',
@@ -85,9 +91,35 @@ router.post('/enter', async (ctx, next) => {
     }
     return next()
   }
+  const userGroupModel = client.from(user_group_tab)
+  await userGroupModel.insert({
+    user_id: user.id,
+    group_id: params.id
+  })
   ctx.body = {
     code: 0,
     message: 'success'
   }
-})
+}
+
+export const getList = async (ctx: ParameterizedContext, next: Next) => {
+  const db = client.from(group_tab)
+  const model = db
+    .leftJoin(
+      user_group_tab,
+      `${group_tab}.id`,
+      `${user_group_tab}.group_id`
+    )
+  const records = await model
+      .select(
+        `${group_tab}.id`,
+        `${group_tab}.name`,
+        `${group_tab}.description`,
+        `${group_tab}.create_time`
+      )
+  ctx.body = {
+    code: 0,
+    data: records
+  }
+}
 export default router

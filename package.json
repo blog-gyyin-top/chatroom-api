@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/blog-gyyin-top/chatroom-api#readme",
   "dependencies": {
+    "cookies": "^0.8.0",
     "jsonschema": "^1.4.0",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.21.6",
@@ -31,7 +32,8 @@
     "koa-router": "^9.4.0",
     "koa-static": "^5.0.0",
     "moment": "^2.29.1",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "socket.io": "^3.0.1"
   },
   "devDependencies": {
     "@types/jsonwebtoken": "^8.5.0",

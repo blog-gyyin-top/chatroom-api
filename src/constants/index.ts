@@ -23,5 +23,9 @@ export const ERROR_STATUS = {
   GROUP_NOT_EXIST: {
     code: 10003,
     message: 'group does not exist'
+  },
+  USER_NOT_LOGIN: {
+    code: 10004,
+    message: 'user does not login'
   }
 }

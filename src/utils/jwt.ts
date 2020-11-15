@@ -18,3 +18,7 @@ export const sign = (payload: {
 export const verify = (token: string) => {
   return jwt.verify(token, secret)
 }
+
+export const decode = (token: string) => {
+  return jwt.decode(token)
+}
