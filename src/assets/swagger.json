@@ -29,7 +29,6 @@
     }
   ],
   "schemes": [
-    "https",
     "http"
   ],
   "paths": {
@@ -154,7 +153,7 @@
         ],
         "parameters": [
           {
-            "in": "body",
+            "ii": "body",
             "name": "body",
             "description": "enter chatroom",
             "required": true,
@@ -168,6 +167,76 @@
             "description": "success",
             "schema": {
               "$ref": "#/definitions/EnterResponse"
+            }
+          }
+        }
+      }
+    },
+    "/api/group/list": {
+      "post": {
+        "tags": [
+          "group"
+        ],
+        "summary": "group list",
+        "description": "group list",
+        "operationId": "groupList",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "enter chatroom",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ListRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "$ref": "#/definitions/ListResponse"
+            }
+          }
+        }
+      }
+    },
+    "/api/group/message": {
+      "post": {
+        "tags": [
+          "group"
+        ],
+        "summary": "group message",
+        "description": "group message",
+        "operationId": "groupMessage",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "group message",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/MessageRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "$ref": "#/definitions/MessageResponse"
             }
           }
         }
@@ -269,6 +338,87 @@
         },
         "message": {
           "type": "string"
+        }
+      }
+    },
+    "ListRequest": {
+      "type": "object",
+      "properties": {
+      }
+    },
+    "ListResponse": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "number"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number"
+              },
+              "description": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "create_time": {
+                "type": "number"
+              },
+              "update_time": {
+                "type": "number"
+              }
+            }
+          }
+        }
+      }
+    },
+    "MessageRequest": {
+      "type": "object",
+      "properties": {
+        "group_id": {
+          "type": "number"
+        }
+      }
+    },
+    "MessageResponse": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "number"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number"
+              },
+              "content": {
+                "type": "string"
+              },
+              "from": {
+                "type": "string"
+              },
+              "create_time": {
+                "type": "number"
+              },
+              "group_id": {
+                "type": "number"
+              }
+            }
+          }
         }
       }
     }

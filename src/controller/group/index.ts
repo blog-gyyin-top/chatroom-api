@@ -6,6 +6,7 @@ import { Group } from '../../../@types/group'
 import { client  } from '../../config/db'
 import { DB_TABLE, ERROR_STATUS } from '../../constants'
 import { verify } from '../../middleware/auth'
+import Knex from 'knex'
 
 const router = new Router({
   prefix: '/group'
@@ -14,6 +15,7 @@ router.use(verify)
 const validate = jsonschema.validate;
 const group_tab = DB_TABLE.group;
 const user_group_tab = DB_TABLE.user_group
+const message_tab = DB_TABLE.group_message
 
 export const createGroup = async (ctx: ParameterizedContext, next: Next) => {
   const params: Group.createParams = ctx.request.body;
@@ -39,7 +41,7 @@ export const createGroup = async (ctx: ParameterizedContext, next: Next) => {
     }
     return next()
   }
-  const now = Date.now()
+  const now = Date.now() / 1000
   const ids = await model.insert({
     ...params,
     create_time: now,
@@ -57,6 +59,7 @@ export const createGroup = async (ctx: ParameterizedContext, next: Next) => {
 export const enterGroup = async (ctx: ParameterizedContext, next: Next) => {
   const user = ctx.state.user;
   const params: Group.enterParams  = ctx.request.body
+  console.log('params', params)
   const res = validate(params, {
     type: 'object',
     properties: {
@@ -104,19 +107,29 @@ export const enterGroup = async (ctx: ParameterizedContext, next: Next) => {
 
 export const getList = async (ctx: ParameterizedContext, next: Next) => {
   const db = client.from(group_tab)
-  const model = db
-    .leftJoin(
-      user_group_tab,
-      `${group_tab}.id`,
-      `${user_group_tab}.group_id`
-    )
-  const records = await model
-      .select(
-        `${group_tab}.id`,
-        `${group_tab}.name`,
-        `${group_tab}.description`,
-        `${group_tab}.create_time`
-      )
+  const records = await db
+      .select('*').orderBy('create_time', 'desc')
+
+  ctx.body = {
+    code: 0,
+    data: records,
+    message: 'success'
+  }
+}
+
+export const getMessage = async (ctx: ParameterizedContext, next: Next) => {
+  const params = ctx.request.query;
+  const group_id = params.group_id;
+  const db = client.from(message_tab);
+  if (!group_id) {
+    ctx.response.body = {
+      ...ERROR_STATUS.PARAMS_INVALID
+    }
+    return next()
+  }
+  const records = await db.where({
+    group_id
+  }).orderBy('create_time', 'desc')
   ctx.body = {
     code: 0,
     data: records

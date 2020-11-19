@@ -8,5 +8,6 @@ const router = new Router({
 router.post('/create', Group.createGroup)
 router.post('/enter', Group.enterGroup)
 router.get('/list', Group.getList)
+router.get('/messages', Group.getMessage)
 
 export default router
