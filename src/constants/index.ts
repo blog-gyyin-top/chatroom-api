@@ -27,5 +27,9 @@ export const ERROR_STATUS = {
   USER_NOT_LOGIN: {
     code: 10004,
     message: 'user does not login'
-  }
+  },
+  USER_HAS_REGISTER: {
+    code: 10005,
+    message: "user has already registed."
+  },
 }

@@ -6,7 +6,6 @@ import { Group } from '../../../@types/group'
 import { client  } from '../../config/db'
 import { DB_TABLE, ERROR_STATUS } from '../../constants'
 import { verify } from '../../middleware/auth'
-import Knex from 'knex'
 
 const router = new Router({
   prefix: '/group'

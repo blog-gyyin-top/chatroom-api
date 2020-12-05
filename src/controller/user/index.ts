@@ -42,6 +42,15 @@ export const registerUser = async (ctx: ParameterizedContext, next: Next) => {
   const now = Date.now() / 1000
   // 密码加盐储存
   md5.update(params.name + SALT + params.password)
+  const record = await table.where({
+    'name': params.name
+  }).first();
+  if (record) {
+    ctx.body = {
+      ...ERROR_STATUS.USER_HAS_REGISTER
+    }
+    return;
+  }
   try {
     const id = await table.insert({
       name: params.name,
