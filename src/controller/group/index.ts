@@ -41,16 +41,19 @@ export const createGroup = async (ctx: ParameterizedContext, next: Next) => {
     return next()
   }
   const now = Date.now() / 1000
-  const ids = await model.insert({
+  const ids = await model.clone().insert({
     ...params,
     create_time: now,
     update_time: now
-  })
+  });
+  const id = ids[0]
+  const group = await model.clone().where({
+    id: id
+  }).first()
+  const { password, ...data } = group
   ctx.body = {
     code: 0,
-    data: {
-      id: ids[0]
-    },
+    data: data,
     message: 'success'
   }
 }
@@ -98,9 +101,11 @@ export const enterGroup = async (ctx: ParameterizedContext, next: Next) => {
     user_id: user.id,
     group_id: params.id
   })
+  const { password, ...data } = record
   ctx.body = {
     code: 0,
-    message: 'success'
+    message: 'success',
+    data: data
   }
 }
 

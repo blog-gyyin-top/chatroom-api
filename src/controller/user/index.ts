@@ -97,9 +97,15 @@ export const login = async function(ctx: ParameterizedContext, next: Next) {
     httpOnly: true,
     overwrite: true
   })
+  
+  const { password, ...data } = user
+
   ctx.response.body = {
     code: 0,
-    message: 'login success'
+    message: 'login success',
+    data: {
+      user: data
+    }
   }
 }
 

@@ -153,7 +153,7 @@
         ],
         "parameters": [
           {
-            "ii": "body",
+            "in": "body",
             "name": "body",
             "description": "enter chatroom",
             "required": true,
@@ -283,6 +283,23 @@
         },
         "message": {
           "type": "string"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "id": {
+              "type": "string"
+            },
+            "create_time": {
+              "type": "string"
+            },
+            "update_time": {
+              "type": "string"
+            }
+          }
         }
       }
     },
@@ -307,9 +324,20 @@
           "type": "number"
         },
         "data": {
-          "type": "object",
           "properties": {
             "id": {
+              "type": "number"
+            },
+            "name": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "create_time": {
+              "type": "number"
+            },
+            "update_time": {
               "type": "number"
             }
           }
@@ -338,6 +366,25 @@
         },
         "message": {
           "type": "string"
+        },
+        "data": {
+          "properties": {
+            "id": {
+              "type": "number"
+            },
+            "name": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "create_time": {
+              "type": "number"
+            },
+            "update_time": {
+              "type": "number"
+            }
+          }
         }
       }
     },
