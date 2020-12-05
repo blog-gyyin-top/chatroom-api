@@ -1,0 +1,9 @@
+
+From: whistle@2.2.1
+Node: v12.14.0
+Date: 2020-11-24 18:26:26
+Error [ERR_HTTP2_STREAM_ERROR]: Stream closed with error code NGHTTP2_INTERNAL_ERROR
+    at ClientHttp2Stream._destroy (internal/http2/core.js:2101:13)
+    at ClientHttp2Stream.destroy (internal/streams/destroy.js:38:8)
+    at ClientHttp2Stream.[kMaybeDestroy] (internal/http2/core.js:2117:12)
+    at Http2Stream.onStreamClose (internal/http2/core.js:493:26)
