@@ -20,7 +20,7 @@ export const checkUserParams = (ctx, next) => {
   const res = validate(params, {
     type: 'object',
     properties: {
-      name: {
+      username: {
         type: 'string'
       },
       password: {
@@ -41,9 +41,9 @@ export const registerUser = async (ctx: ParameterizedContext, next: Next) => {
   const md5 = crypto.createHash('md5')
   const now = Date.now() / 1000
   // 密码加盐储存
-  md5.update(params.name + SALT + params.password)
+  md5.update(params.username + SALT + params.password)
   const record = await table.where({
-    'name': params.name
+    'name': params.username
   }).first();
   if (record) {
     ctx.body = {
@@ -53,7 +53,7 @@ export const registerUser = async (ctx: ParameterizedContext, next: Next) => {
   }
   try {
     const id = await table.insert({
-      name: params.name,
+      name: params.username,
       password: md5.digest('hex'),
       create_time: now,
       update_time: now
@@ -75,10 +75,10 @@ export const login = async function(ctx: ParameterizedContext, next: Next) {
   const table = client.from(user_tab);
   const md5 = crypto.createHash('md5')
   // 密码加盐储存
-  md5.update(params.name + SALT + params.password)
+  md5.update(params.username + SALT + params.password)
   const encryPassword = md5.digest('hex');
   const user = await table.select("*").where({
-    name: params.name
+    name: params.username
   }).first();
   if (!user) {
     ctx.response.body = ERROR_STATUS.USER_NOT_EXIST

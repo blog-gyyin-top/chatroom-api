@@ -1,6 +1,6 @@
 export declare namespace User {
   export interface registerParams {
-    name: string;
+    username: string;
     password: string
   }
 }
